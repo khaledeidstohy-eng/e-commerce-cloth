@@ -1,0 +1,43 @@
+@if (myProduct) {
+  <section class="container-app details-section">
+    <div class="details-grid">
+
+      <div class="details-image-wrap">
+        <img [src]="staticURL + myProduct.imgURL" [alt]="myProduct.name" class="details-image" />
+
+        @if (isOutOfStock) {
+          <span class="badge badge-out">نفذت الكمية</span>
+        }
+      </div>
+
+      <div class="details-info">
+        @if (myProduct.category) {
+          <span class="breadcrumb">{{ myProduct.category.name }}</span>
+        }
+
+        <h1 class="details-name">{{ myProduct.name }}</h1>
+        <p class="details-price">{{ myProduct.price }} ج.م</p>
+
+        <p class="details-desc">{{ myProduct.desc }}</p>
+
+        @if (!isOutOfStock) {
+          <div class="qty-row">
+            <span class="qty-label">الكمية:</span>
+            <div class="qty-control">
+              <button (click)="decreaseQty()" class="qty-btn">-</button>
+              <span class="qty-value">{{ quantity }}</span>
+              <button (click)="increaseQty()" class="qty-btn">+</button>
+            </div>
+            <span class="stock-note">متوفر: {{ myProduct.stock }} قطعة</span>
+          </div>
+
+          <button class="btn btn-primary btn-add-cart" (click)="addToCart()">
+            {{ addedToCart ? '✓ تمت الإضافة' : 'أضف إلى السلة' }}
+          </button>
+        } @else {
+          <button class="btn btn-outline btn-add-cart" disabled>غير متوفر حاليًا</button>
+        }
+      </div>
+    </div>
+  </section>
+}

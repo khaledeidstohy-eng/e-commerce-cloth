@@ -1,0 +1,54 @@
+<h1>Pipes</h1>
+
+<h3>String Pipes</h3>
+<p>
+{{name | uppercase}}
+</p>
+
+<p>{{nameTwo | lowercase}}</p>
+
+<p>{{name | titlecase}}</p>
+
+
+<h5>Slice Pipe</h5>
+<p>{{'Angular' | slice:1:4}}</p>
+
+<h3>Date</h3>
+<p>{{myDate | date}}</p>
+
+<p>{{myDate | date : 'longDate'}}</p>
+<p>{{myDate | date : 'shortDate'}}</p>
+<p>{{myDate | date : 'dd-MMMM-yyyy HH:mm:ss'}}</p>
+
+
+<h3>Percentage pipe</h3>
+
+<p>{{grade | percent}}</p>
+<p>{{grade | percent : '1.2-3'}}</p>
+
+<h3>Currency Pipe</h3>
+<p>{{price | currency}}</p>
+<p>{{price | currency : 'EUR'}}</p>
+<p>{{price | currency : 'LE'}}</p>
+<p>{{price | currency : 'USD' : false : '1.2-3'}}</p>
+
+<h3>Number Pipe</h3>
+<p>{{price | number}}</p>
+<p>{{price | number : '1.0-2'}}</p>
+
+<h3>json Pipe</h3>
+
+<p>{{ {name:'Angular',version: 21} | json}}</p>
+
+<h3>Async Data</h3>
+
+<p>{{asyncData | async}}</p>
+
+<h3>Chain</h3>
+
+<p>{{myDate | date: 'longDate' | uppercase}}</p>
+
+
+<h3>Custom Pipe</h3>
+
+<p>{{ 'asd asd asda asd sdasd sadasd' | noSpace}}</p>

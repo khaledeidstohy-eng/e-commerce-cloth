@@ -1,0 +1,72 @@
+<section class="container-app checkout-section">
+  <h1 class="section-title">إتمام الطلب</h1>
+
+  @if (!cart || cart.items.length === 0) {
+    <p class="status-msg">سلتك فارغة، لا يمكن إتمام الطلب</p>
+  } @else {
+
+    <div class="checkout-layout">
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" class="checkout-form">
+        <h3>بيانات التوصيل</h3>
+
+        <div class="form-group">
+          <label>الاسم بالكامل</label>
+          <input type="text" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label>رقم الموبايل</label>
+          <input type="tel" formControlName="mobilePhone" placeholder="01xxxxxxxxx" />
+          @if (checkoutForm.get('mobilePhone')?.touched && checkoutForm.get('mobilePhone')?.invalid) {
+            <span class="field-error">رقم موبايل مصري صحيح مطلوب (01xxxxxxxxx)</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>الرقم القومي</label>
+          <input type="text" formControlName="nationalId" placeholder="14 رقم" />
+          @if (checkoutForm.get('nationalId')?.touched && checkoutForm.get('nationalId')?.invalid) {
+            <span class="field-error">الرقم القومي 14 رقم</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>المحافظة</label>
+          <input type="text" formControlName="governorate" placeholder="مثال: القاهرة" />
+        </div>
+
+        <div class="form-group">
+          <label>العنوان بالتفصيل</label>
+          <textarea formControlName="address" rows="3" placeholder="الشارع، الحي، رقم العقار..."></textarea>
+        </div>
+
+        <div class="form-group payment-note">
+          💵 الدفع كاش عند الاستلام
+        </div>
+
+        @if (errorMsg) {
+          <p class="auth-error">{{ errorMsg }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary checkout-submit" [disabled]="loading">
+          {{ loading ? 'جاري إرسال الطلب...' : 'تأكيد الطلب' }}
+        </button>
+      </form>
+
+      <div class="checkout-summary">
+        <h3>ملخص الطلب</h3>
+        @for (item of cart.items; track item._id) {
+          <div class="summary-item">
+            <span>{{ item.product.name }} × {{ item.quantity }}</span>
+            <span>{{ item.priceAtOrder * item.quantity }} ج.م</span>
+          </div>
+        }
+        <div class="summary-total">
+          <span>الإجمالي</span>
+          <span>{{ cart.totalPrice }} ج.م</span>
+        </div>
+      </div>
+    </div>
+  }
+</section>

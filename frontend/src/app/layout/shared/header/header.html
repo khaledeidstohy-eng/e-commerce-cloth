@@ -1,0 +1,116 @@
+<!-- ============ Top announcement bar ============ -->
+<div class="announce-bar">
+  🔥 خصومات نهاية الموسم بدأت! خصم <strong>15%</strong> على جميع المنتجات — اطلب الآن 😎
+</div>
+
+<!-- ============ Top utility bar ============ -->
+<div class="utility-bar">
+  <div class="container-app utility-row">
+    <div class="utility-left">
+      @if (!name) {
+        <a routerLink="/login">تسجيل الدخول</a>
+        <span class="sep">|</span>
+        <a routerLink="/signup">إنشاء حساب</a>
+      } @else {
+        <span>مرحبًا، {{ name }}</span>
+        <span class="sep">|</span>
+        <button class="link-btn" (click)="logout()">تسجيل الخروج</button>
+      }
+    </div>
+    <div class="utility-right">
+      <a routerLink="/account">حسابي</a>
+      <span class="sep">|</span>
+      <a routerLink="/account/orders">تتبع طلبي</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Logo + Search + Cart row ============ -->
+<div class="brand-row">
+  <div class="container-app brand-row-inner">
+    <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <a routerLink="/home" class="logo">متجري</a>
+
+    <form class="search-bar" (submit)="runSearch()">
+      <input type="text" placeholder="ابحث عن منتج..." [(ngModel)]="searchTerm" name="search" />
+      <button type="submit" class="search-btn">🔍</button>
+    </form>
+
+    <div class="brand-actions">
+      <a routerLink="/account" class="icon-btn" aria-label="account">👤</a>
+      <a routerLink="/cart" class="icon-btn cart-btn" aria-label="cart">
+        🛍️
+        @if (cartCount > 0) {
+          <span class="cart-count">{{ cartCount }}</span>
+        }
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Main categories nav with 3-level mega menu ============ -->
+<nav class="main-nav-bar">
+  <div class="container-app">
+    <ul class="main-nav" [class.open]="mobileMenuOpen">
+
+      <li class="nav-item">
+        <a routerLink="/products-list" routerLinkActive="active" class="nav-link new-link">وصل حديثًا</a>
+      </li>
+
+      @for (cat of categories; track cat._id) {
+        <li
+          class="nav-item"
+          (mouseenter)="openMenu(cat._id)"
+          (mouseleave)="closeMenu()"
+        >
+          <a
+            [routerLink]="['/products-list']"
+            [queryParams]="{ category: cat._id }"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ cat.name }}
+          </a>
+
+          @if (cat.subCategories && cat.subCategories.length > 0 && openMenuId === cat._id) {
+            <div class="mega-menu">
+              <div class="container-app mega-menu-inner">
+                <div class="mega-menu-columns">
+                  @for (sub of cat.subCategories; track sub._id) {
+                    <div class="mega-menu-col">
+                      <a
+                        [routerLink]="['/products-list']"
+                        [queryParams]="{ category: cat._id, subCategory: sub._id }"
+                        class="mega-menu-col-title"
+                      >
+                        {{ sub.name }}
+                      </a>
+
+                      @if (sub.subCategories && sub.subCategories.length > 0) {
+                        <ul class="mega-menu-sublist">
+                          @for (subsub of sub.subCategories; track subsub._id) {
+                            <li>
+                              <a
+                                [routerLink]="['/products-list']"
+                                [queryParams]="{ category: cat._id, subCategory: sub._id, subSubCategory: subsub._id }"
+                              >
+                                {{ subsub.name }}
+                              </a>
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  </div>
+</nav>

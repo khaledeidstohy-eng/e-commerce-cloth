@@ -1,0 +1,14 @@
+<h1>Parent</h1>
+
+<button (click)="do()">Click</button>
+
+
+<br>
+
+<ul>
+@for(name of names;track name){
+    <li>
+<app-child [myName] = "name"></app-child>
+</li>
+}
+</ul>

@@ -1,0 +1,15 @@
+<section class="container-app plist-section">
+  <h1 class="section-title">منتجاتنا</h1>
+
+  @if (loading) {
+    <p class="status-msg">جاري التحميل...</p>
+  } @else if (myProducts.length === 0) {
+    <p class="status-msg">لا توجد منتجات مطابقة</p>
+  } @else {
+    <div class="products-grid">
+      @for (product of myProducts; track product._id) {
+        <app-product [myProduct]="product"></app-product>
+      }
+    </div>
+  }
+</section>

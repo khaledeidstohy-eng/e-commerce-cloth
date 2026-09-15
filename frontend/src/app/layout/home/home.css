@@ -1,0 +1,40 @@
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: #fff;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.hero-content p {
+  font-size: 17px;
+  opacity: 0.9;
+  margin: 0 0 26px;
+}
+
+.section {
+  padding: 50px 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--color-text-muted);
+  grid-column: 1 / -1;
+  padding: 40px 0;
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 50px 16px; }
+  .hero-content h1 { font-size: 26px; }
+}

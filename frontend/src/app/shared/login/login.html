@@ -1,0 +1,37 @@
+<section class="auth-section">
+  <div class="auth-card">
+    <h1 class="auth-title">تسجيل الدخول</h1>
+    <p class="auth-subtitle">سعداء بعودتك! سجّل دخولك لمتابعة طلباتك</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form">
+
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" formControlName="email" placeholder="example@email.com" />
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <span class="field-error">أدخل بريدًا إلكترونيًا صحيحًا</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" formControlName="password" placeholder="••••••••" />
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <span class="field-error">كلمة المرور 6 أحرف على الأقل</span>
+        }
+      </div>
+
+      @if (errorMsg) {
+        <p class="auth-error">{{ errorMsg }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary auth-submit" [disabled]="loading">
+        {{ loading ? 'جاري الدخول...' : 'تسجيل الدخول' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      ليس لديك حساب؟ <a routerLink="/signup">إنشاء حساب جديد</a>
+    </p>
+  </div>
+</section>

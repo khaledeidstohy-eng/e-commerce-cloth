@@ -1,0 +1,62 @@
+<section class="auth-section">
+  <div class="auth-card">
+    <h1 class="auth-title">إنشاء حساب جديد</h1>
+    <p class="auth-subtitle">انضم إلينا وتمتع بأفضل عروض الموضة</p>
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+      <div class="form-group">
+        <label>الاسم بالكامل</label>
+        <input type="text" formControlName="name" placeholder="اكتب اسمك" />
+        @if (myForm.get('name')?.touched && myForm.get('name')?.invalid) {
+          <span class="field-error">الاسم لازم يكون 3 أحرف على الأقل</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" formControlName="email" placeholder="example@email.com" />
+        @if (myForm.get('email')?.touched && myForm.get('email')?.invalid) {
+          <span class="field-error">أدخل بريدًا إلكترونيًا صحيحًا</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" formControlName="password" placeholder="••••••••" />
+        @if (myForm.get('password')?.touched && myForm.get('password')?.invalid) {
+          <span class="field-error">كلمة المرور 6 أحرف على الأقل</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>النوع (اختياري)</label>
+        <select formControlName="gender">
+          <option value="">اختر</option>
+          <option value="male">ذكر</option>
+          <option value="female">أنثى</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>رقم الموبايل (اختياري)</label>
+        <input type="tel" formControlName="mobilePhone" placeholder="01xxxxxxxxx" />
+      </div>
+
+      @if (errorMsg) {
+        <p class="auth-error">{{ errorMsg }}</p>
+      }
+      @if (successMsg) {
+        <p class="auth-success">{{ successMsg }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary auth-submit" [disabled]="loading">
+        {{ loading ? 'جاري الإنشاء...' : 'إنشاء الحساب' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      لديك حساب بالفعل؟ <a routerLink="/login">تسجيل الدخول</a>
+    </p>
+  </div>
+</section>

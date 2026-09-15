@@ -1,0 +1,73 @@
+<section class="container-app cart-section">
+  <h1 class="section-title">سلة المشتريات</h1>
+
+  @if (!cart || cart.items.length === 0) {
+    <div class="empty-cart">
+      <p>سلتك فارغة حاليًا</p>
+      <a routerLink="/products-list" class="btn btn-primary">تصفح المنتجات</a>
+    </div>
+  } @else {
+
+    <div class="cart-layout">
+
+      <div class="cart-items">
+
+        @if (hasPriceChangedItems) {
+          <div class="price-alert">
+             سعر بعض المنتجات في سلتك تغيّر. لا يمكنك إتمام الطلب حتى تراجع هذه المنتجات بالأسفل.
+          </div>
+        }
+
+        @for (item of validItems; track item._id) {
+          <div class="cart-item">
+            <img [src]="staticURL + item.product.imgURL" [alt]="item.product.name" class="cart-item-img" />
+            <div class="cart-item-info">
+              <h3>{{ item.product.name }}</h3>
+              <p class="cart-item-price">{{ item.priceAtOrder }} ج.م × {{ item.quantity }}</p>
+            </div>
+            <button class="remove-btn" (click)="remove(item._id)" [disabled]="busyItemId === item._id">
+              حذف
+            </button>
+          </div>
+        }
+
+        @if (changedItems.length > 0) {
+          <h2 class="changed-title">منتجات تغيّر سعرها</h2>
+          @for (item of changedItems; track item._id) {
+            <div class="cart-item cart-item-changed">
+              <img [src]="staticURL + item.product.imgURL" [alt]="item.product.name" class="cart-item-img" />
+              <div class="cart-item-info">
+                <h3>{{ item.product.name }}</h3>
+                <p class="cart-item-price old-price">السعر القديم: {{ item.priceAtOrder }} ج.م</p>
+                <p class="cart-item-price new-price">السعر الحالي: {{ item.product.price }} ج.م</p>
+              </div>
+              <div class="changed-actions">
+                <button class="btn btn-primary btn-sm" (click)="acceptNewPrice(item._id)" [disabled]="busyItemId === item._id">
+                  إضافة بالسعر الجديد
+                </button>
+                <button class="remove-btn" (click)="remove(item._id)" [disabled]="busyItemId === item._id">
+                  حذف
+                </button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="cart-summary">
+        <h3>ملخص الطلب</h3>
+        <div class="summary-row">
+          <span>الإجمالي</span>
+          <span>{{ cart.totalPrice }} ج.م</span>
+        </div>
+        <a
+          routerLink="/checkout"
+          class="btn btn-primary checkout-btn"
+          [class.disabled]="hasPriceChangedItems || validItems.length === 0"
+        >
+          إتمام الطلب
+        </a>
+      </div>
+    </div>
+  }
+</section>

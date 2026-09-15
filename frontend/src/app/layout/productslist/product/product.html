@@ -1,0 +1,25 @@
+@if (myProduct) {
+  <a [routerLink]="'/products-list/' + myProduct.slug" class="product-card">
+    <div class="product-image-wrap">
+      <img
+        class="product-image"
+        [src]="staticURL + myProduct.imgURL"
+        [alt]="myProduct.name"
+        loading="lazy"
+      />
+
+      @if (seasonLabel) {
+        <span class="badge badge-season">{{ seasonLabel }}</span>
+      }
+
+      @if (isOutOfStock) {
+        <span class="badge badge-out">نفذت الكمية</span>
+      }
+    </div>
+
+    <div class="product-info">
+      <h3 class="product-name">{{ myProduct.name }}</h3>
+      <p class="product-price">{{ myProduct.price }} ج.م</p>
+    </div>
+  </a>
+}
